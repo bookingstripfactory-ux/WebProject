@@ -303,7 +303,101 @@ const legalSections: LegalSection[] = [
       },
     ],
   },
+  {
+    id: "payment-terms-and-conditions",
+    title: "Payment Terms & Conditions",
+    intro: [
+      "The following payment terms apply to all confirmed bookings with Trip Factory. By confirming a booking and making the advance payment, the client acknowledges and agrees to these terms.",
+    ],
+    blocks: [
+      {
+        heading: "1. Payment Schedule",
+        items: [
+          "20% Advance Payment is required to confirm the booking and block the vehicle, accommodation (if applicable), and tour arrangements.",
+          "70% Payment must be completed before the commencement of the tour.",
+          "Final 10% Payment shall be settled immediately after the safe drop-off of students at the school.",
+        ],
+      },
+      {
+        heading: "2. Refundability",
+        paragraphs: [
+          "Advance Payment is Non-Refundable under any circumstances once the booking is confirmed.",
+        ],
+      },
+      {
+        heading: "3. Payment Modes",
+        paragraphs: [
+          "Payment Modes Accepted: Cheque, Demand Draft (DD), NEFT, RTGS, IMPS, and Bank Transfer. Cheque / Demand Draft should be drawn in favour of MANAGING DIRECTOR ACCOUNT.",
+        ],
+      },
+      {
+        heading: "4. Outstanding Dues",
+        paragraphs: [
+          "All Payments must be completed as per the agreed payment schedule. Any outstanding dues must be cleared before the completion of the tour.",
+        ],
+      },
+      {
+        heading: "5. Itinerary Modifications",
+        paragraphs: [
+          "TripFactory reserves the right to modify, rearrange, or reschedule the tour itinerary due to traffic conditions, weather, road closures, government restrictions, natural calamities, operational requirements, safety concerns, or any unforeseen circumstances, without compromising the overall tour experience.",
+        ],
+      },
+      {
+        heading: "6. Force Majeure",
+        paragraphs: [
+          "The company shall not be held responsible for delays or changes caused by events beyond its control, including natural disasters, strikes, political disturbances, or force majeure situations.",
+        ],
+      },
+      {
+        heading: "7. Group Coordinator Responsibility",
+        paragraphs: [
+          "The school/group coordinator is responsible for ensuring student discipline, attendance, and timely reporting throughout the tour.",
+        ],
+      },
+      {
+        heading: "8. Passenger Count and Taxes",
+        items: [
+          "Final passenger count must be confirmed before departure. Any additions or reductions after confirmation may result in revised pricing.",
+          "GST and other applicable Government taxes, if any, shall be charged extra as per prevailing regulations unless specifically mentioned as included in the quotation.",
+        ],
+      },
+      {
+        heading: "9. Acceptance of Terms",
+        paragraphs: [
+          "By confirming the booking and making the advance payment, the client acknowledges and agrees to all the above Payment Terms & Conditions.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "package-exclusion",
+    title: "Package Exclusion",
+    intro: [
+      "The following items are not included in the package cost unless specifically stated otherwise in the package inclusions.",
+    ],
+    blocks: [
+      {
+        heading: "Exclusions",
+        items: [
+          "GST (if applicable) is extra and will be charged as per Government of India regulations.",
+          "Special Darshan/VIP Entry Tickets at Meenakshi Amman Temple are not included.",
+          "Personal Expenses such as shopping, snacks, beverages, tips, laundry, phone calls, and any personal purchases.",
+          "Additional Vehicle Usage beyond the confirmed itinerary or for personal requirements.",
+          "Sightseeing or Stops not mentioned in the finalized itinerary.",
+          "Medical & Emergency Expenses arising from illness, accidents, hospitalization, or any unforeseen circumstances.",
+          "Travel Insurance (unless specifically mentioned in the package).",
+          "Entry Tickets to attractions not listed under the package inclusions.",
+          "Extra Food & Beverages apart from the meals specified in the itinerary.",
+          "Personal Photography/Videography Charges wherever applicable.",
+          "Expenses Due to Natural Calamities, Traffic Delays, Road Closures, Vehicle Breakdown, Strikes, Political Disturbances, or Any Force Majeure Situation beyond the control of the tour operator.",
+          'Any Service or Facility Not Specifically Mentioned Under "Package Inclusions."',
+        ],
+      },
+    ],
+  },
 ];
+
+
 
 export const metadata: Metadata = {
   title: "Legal Policies | TripFactory",

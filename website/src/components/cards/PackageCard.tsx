@@ -247,7 +247,7 @@ function generatedRootStyle(mode: Mode): CSSProperties {
     height: mobile ? "445px" : "552px",
     minHeight: mobile ? "445px" : "552px",
     overflow: "hidden",
-    scrollSnapAlign: "start",
+    scrollSnapAlign: mobile ? "center" : "start",
   };
 }
 

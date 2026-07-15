@@ -13,6 +13,7 @@ import {
   type ChangeEvent,
   type ReactElement,
 } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { PackageCard, PACKAGE_CARDS, type PackageDuration, type PackageEnquirySelection } from "@/components/cards/PackageCard";
 import { TestimonialDeck } from "@/components/cards/TestimonialCard";
@@ -240,6 +241,8 @@ const SLIDERS = tripFactoryAnimations.sliders;
 const BUTTON_ACTIONS = tripFactoryAnimations.buttonActions;
 const LOCATIONS = tripFactoryAnimations.locations;
 const ADVANCED_ANIMATIONS = tripFactoryAnimations.advancedAnimations;
+const GOOGLE_MAP_EMBED_URL =
+  "https://www.google.com/maps?q=GAME+BOY,+No+966,FF4+laxmanan+Nagar+Dr.Radhakrishnan+Road,+2nd+Cross+Rd,+Extn,+Gandhipuram,+Coimbatore,+Tamil+Nadu+641012&output=embed";
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
@@ -259,6 +262,19 @@ function useMobileScale() {
   }, []);
 
   return scale;
+}
+
+function TripFactoryLoader() {
+  return (
+    <div className="tf-page-loader" role="status" aria-label="Loading TripFactory">
+      <div className="tf-page-loader-inner">
+        <Image src="/asset/logo.png" alt="TripFactory" width={190} height={86} priority unoptimized />
+        <div className="tf-page-loader-bar" aria-hidden="true">
+          <span />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function useSliderIndexes() {
@@ -535,7 +551,16 @@ function DesktopPage({ buttonAction, sliderIndexes, enquiryForm, packageDuration
     <ImageElement id={"decorative_image_4"} className="tf-d-image_mrc841er_8vyp0" />
     <BoxElement id={"Let's_connect_Section"} className="tf-d-Let_s_connect_Section_xqyc9" type="group">
       <BoxElement id={"container_mrax5i7o"} className="tf-d-container_mrax5i7o_pbc8l" type="container">
-        <BoxElement id={"container_mrax5i7p"} className="tf-d-container_mrax5i7p_pbc8l" type="container" />
+        <BoxElement id={"container_mrax5i7p"} className="tf-d-container_mrax5i7p_pbc8l" type="container">
+          <iframe
+            className="tf-map-embed"
+            src={GOOGLE_MAP_EMBED_URL}
+            title="Trip Factory location map"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </BoxElement>
         <BoxElement id={"container_mrax5i7q"} className="tf-d-container_mrax5i7q_pbc8l" type="container">
           <BoxElement id={"container_mraxrtd0"} className="tf-d-container_mraxrtd0_pcffz" type="container" />
           <ImageElement id={"contact_location_icon"} className="tf-d-image_mraxrtcz_8tq4z" />
@@ -735,10 +760,13 @@ function MobilePage({ buttonAction, sliderIndexes, enquiryForm, packageDurationT
           gap: "16px",
           overflowX: "auto",
           position: "relative",
-          left: "316px",
-          width: "calc(100vw - 32px)",
-          maxWidth: "358px",
+          left: "300px",
+          width: `${MOBILE_CANVAS_WIDTH}px`,
+          maxWidth: "none",
           height: "465px",
+          boxSizing: "border-box",
+          padding: "0 42px",
+          scrollPaddingInline: "42px",
           scrollSnapType: "x mandatory",
           scrollbarWidth: "none",
           background: "transparent",
@@ -802,7 +830,16 @@ function MobilePage({ buttonAction, sliderIndexes, enquiryForm, packageDurationT
     <ImageElement id={"decorative_image_4"} className="tf-m-image_mrc841er_8vyp0" />
     <BoxElement id={"Let's_connect_Section"} className="tf-m-Let_s_connect_Section_xqyc9" type="group">
       <BoxElement id={"container_mrax5i7o"} className="tf-m-container_mrax5i7o_pbc8l" type="container" scaleClassName="tf-scale-m-container_mrax5i7o_pbc8l">
-        <BoxElement id={"container_mrax5i7p"} className="tf-m-container_mrax5i7p_pbc8l" type="container" />
+        <BoxElement id={"container_mrax5i7p"} className="tf-m-container_mrax5i7p_pbc8l" type="container">
+          <iframe
+            className="tf-map-embed"
+            src={GOOGLE_MAP_EMBED_URL}
+            title="Trip Factory location map"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </BoxElement>
         <BoxElement id={"container_mrax5i7q"} className="tf-m-container_mrax5i7q_pbc8l" type="container">
           <BoxElement id={"container_mraxrtd0"} className="tf-m-container_mraxrtd0_pcffz" type="container" />
           <ImageElement id={"contact_location_icon"} className="tf-m-image_mraxrtcz_8tq4z" />
@@ -1271,6 +1308,12 @@ export default function TripFactoryPage() {
   const [members, setMembers] = useState("");
   const [message, setMessage] = useState("");
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowLoader(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParamsKey);
@@ -1410,6 +1453,7 @@ export default function TripFactoryPage() {
 
   return (
     <main className="tf-page-shell">
+      {showLoader ? <TripFactoryLoader /> : null}
       <div className="tf-desktop-shell">
         <div className="tf-canvas tf-desktop-canvas">
           <DesktopPage
@@ -1422,7 +1466,7 @@ export default function TripFactoryPage() {
         </div>
       </div>
       <div className="tf-mobile-shell" style={{ height: mobileContentHeight * mobileScale }}>
-        <div className="tf-canvas tf-mobile-canvas" style={{ transform: `scale(${mobileScale})` }}>
+        <div className="tf-canvas tf-mobile-canvas" style={{ left: "50%", transform: `translateX(-50%) scale(${mobileScale})` }}>
           <MobilePage
             buttonAction={buttonAction}
             sliderIndexes={sliderIndexes}
