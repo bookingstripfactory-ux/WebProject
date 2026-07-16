@@ -10700,6 +10700,37 @@ body {
   opacity: 1 !important;
   transform: none !important;
 }
+
+/* Mobile centering fixes for generated absolute-position sections. */
+@media (max-width: 480px) {
+  html,
+  body,
+  .tf-page-shell {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .tf-mobile-shell {
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  .tf-mobile-canvas {
+    left: 50% !important;
+    margin: 0 !important;
+  }
+
+  .tf-testimonial-mobile-slider {
+    left: -8px !important;
+  }
+
+  .tf-testimonial-mobile-scroll-hint {
+    left: 366px !important;
+  }
+}
 .tf-testimonial-review-text--expanded {
   height: 82px;
   max-height: 82px;
