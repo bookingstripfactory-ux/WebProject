@@ -53,6 +53,7 @@ export function SiteNavbar({ className = "", currentPath, label = "Site navigati
         aria-label="Toggle navigation menu"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
+        suppressHydrationWarning
       >
         <Image src="/asset/ic9.png" alt="" width={50} height={45} unoptimized />
       </button>

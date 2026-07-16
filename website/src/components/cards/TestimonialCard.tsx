@@ -11,7 +11,7 @@ import {
 } from "react";
 import {
   BoxElement,
-  ImageElement,
+  content,
   modeClassName,
   type GeneratedElementSpec,
   type Mode,
@@ -50,8 +50,6 @@ export type TestimonialCardSpec = {
 
 const REVIEWS = (reviewContent as ReviewContent).reviews;
 const REVIEW_WORD_LIMIT = 18;
-const DESKTOP_REVIEW_INTERVAL_MS = 5200;
-const DESKTOP_REVIEW_SWAP_MS = 220;
 const MOBILE_REVIEW_REPEATS = 3;
 
 export const TESTIMONIAL_CARDS: TestimonialCardSpec[] = [
@@ -117,31 +115,55 @@ function DynamicTextElement({
   );
 }
 
-function useDesktopReviewOffset(mode: Mode, cardCount: number) {
-  const [offset, setOffset] = useState(0);
-  const [isFading, setIsFading] = useState(false);
+function useImageExists(src?: string) {
+  const [result, setResult] = useState<{ src?: string; checked: boolean; exists: boolean }>({
+    src,
+    checked: false,
+    exists: false,
+  });
 
   useEffect(() => {
-    if (mode !== "desktop" || REVIEWS.length <= cardCount) return;
+    if (!src) return;
 
-    let swapTimer: number | undefined;
-    let fadeFrame: number | undefined;
-    const interval = window.setInterval(() => {
-      setIsFading(true);
-      swapTimer = window.setTimeout(() => {
-        setOffset((current) => (current + cardCount) % REVIEWS.length);
-        fadeFrame = window.requestAnimationFrame(() => setIsFading(false));
-      }, DESKTOP_REVIEW_SWAP_MS);
-    }, DESKTOP_REVIEW_INTERVAL_MS);
+    let cancelled = false;
+    const probe = new window.Image();
+
+    probe.onload = () => {
+      if (!cancelled) setResult({ src, checked: true, exists: true });
+    };
+    probe.onerror = () => {
+      if (!cancelled) setResult({ src, checked: true, exists: false });
+    };
+    probe.src = src;
 
     return () => {
-      window.clearInterval(interval);
-      if (swapTimer) window.clearTimeout(swapTimer);
-      if (fadeFrame) window.cancelAnimationFrame(fadeFrame);
+      cancelled = true;
+      probe.onload = null;
+      probe.onerror = null;
     };
-  }, [cardCount, mode]);
+  }, [src]);
 
-  return { offset, isFading };
+  return Boolean(src && result.src === src && result.checked && result.exists);
+}
+
+function TestimonialImageElement({ id, className }: { id: string; className: string }) {
+  const image = content.images[id];
+  const src = image?.src;
+  const shouldRender = useImageExists(src);
+
+  if (!src || !shouldRender) return null;
+
+  return (
+    <div className={`tf-el tf-image ${className}`} data-id={id} data-type="image">
+      <Image src={src} alt={image.alt ?? ""} fill sizes="100vw" unoptimized />
+    </div>
+  );
+}
+
+function useDesktopReviewOffset(mode: Mode, cardCount: number) {
+  void mode;
+  void cardCount;
+  return { offset: 0, isFading: false };
 }
 
 function TestimonialStars({ starCount }: { starCount: number }) {
@@ -191,10 +213,13 @@ function TestimonialReviewText({ review }: { review: ReviewEntry }) {
 }
 
 function TestimonialLogo({ review }: { review: ReviewEntry }) {
+  const shouldRender = useImageExists(review.logoLocation);
   const logoStyle: CSSProperties = {
     width: `${review.logoSize.width}px`,
     height: `${review.logoSize.height}px`,
   };
+
+  if (!review.logoLocation || !shouldRender) return null;
 
   return (
     <div className="tf-testimonial-logo" style={logoStyle}>
@@ -219,8 +244,8 @@ export function TestimonialCard({
 
   return (
     <BoxElement id={card.root.id} className={`${modeClassName(mode, card.root.classToken)} tf-testimonial-card`} type="container">
-      <ImageElement id={card.quoteOpen.id} className={modeClassName(mode, card.quoteOpen.classToken)} />
-      <ImageElement id={card.quoteClose.id} className={modeClassName(mode, card.quoteClose.classToken)} />
+      <TestimonialImageElement id={card.quoteOpen.id} className={modeClassName(mode, card.quoteOpen.classToken)} />
+      <TestimonialImageElement id={card.quoteClose.id} className={modeClassName(mode, card.quoteClose.classToken)} />
       <div
         className={`tf-testimonial-content-shell${isFading ? " tf-testimonial-content-shell--fading" : ""}`}
         data-review-id={activeReview.id}

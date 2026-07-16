@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
-import { content, modeClassName, type ButtonAction, type GeneratedElementSpec, type Mode } from "./shared-elements";
+import { content, modeClassName, useSequentialImageLoad, type ButtonAction, type GeneratedElementSpec, type Mode } from "./shared-elements";
 
 type TextContainerSpec = {
   container: GeneratedElementSpec;
@@ -421,7 +421,7 @@ function EnquireControl({
   }
 
   return (
-    <button type="button" {...commonProps}>
+    <button type="button" suppressHydrationWarning {...commonProps}>
       {card.buttonLabel}
     </button>
   );
@@ -442,8 +442,12 @@ export function PackageCard({
   const [selectedComboId, setSelectedComboId] = useState<string | null>(null);
   const [showComboWarning, setShowComboWarning] = useState(false);
   const selectedCombo = selectedComboId ? view.combos.find((combo) => combo.id === selectedComboId) ?? null : null;
+  const { ref: cardRef, shouldLoad: shouldLoadImage, finish: finishImageLoad } = useSequentialImageLoad<HTMLElement>(
+    `${view.id}:${view.image.src}`,
+  );
 
   const rootProps = {
+    ref: cardRef,
     className: view.rootClassName ?? "tour-package-card",
     style: view.rootStyle,
     "data-id": view.id,
@@ -452,7 +456,7 @@ export function PackageCard({
 
   return (
     <article {...rootProps}>
-      {view.image.src ? (
+      {view.image.src && shouldLoadImage ? (
         <Image
           data-id={view.image.id}
           data-type={view.image.id ? "image" : undefined}
@@ -461,7 +465,10 @@ export function PackageCard({
           alt={view.image.alt}
           fill
           sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, 384px"
+          loading="lazy"
           unoptimized
+          onLoad={finishImageLoad}
+          onError={finishImageLoad}
         />
       ) : null}
       <div className="tour-package-card-overlay" />

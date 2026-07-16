@@ -6,6 +6,7 @@ import {
   isValidElement,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -243,6 +244,33 @@ const LOCATIONS = tripFactoryAnimations.locations;
 const ADVANCED_ANIMATIONS = tripFactoryAnimations.advancedAnimations;
 const GOOGLE_MAP_EMBED_URL =
   "https://www.google.com/maps?q=GAME+BOY,+No+966,FF4+laxmanan+Nagar+Dr.Radhakrishnan+Road,+2nd+Cross+Rd,+Extn,+Gandhipuram,+Coimbatore,+Tamil+Nadu+641012&output=embed";
+const CSS_APPEAR_ANIMATION_NAMES = new Set(["tf-fadeIn", "tf-slideUp", "tf-slideIn", "tf-zoomIn"]);
+const DISABLED_ADVANCED_ANIMATION_IDS = new Set([
+  "container_mrarstno",
+  "container_mrav47v5",
+  "container_mrav47vd",
+  "testimonial_1_quote",
+  "testimonial_2_quote",
+  "testimonial_3_quote",
+  "testimonial_1_quote_icon_open",
+  "testimonial_1_quote_icon_close",
+  "testimonial_2_quote_icon_open",
+  "testimonial_2_quote_icon_close",
+  "testimonial_3_quote_icon_open",
+  "testimonial_3_quote_icon_close",
+]);
+const SEQUENTIAL_FONTS = [
+  {
+    family: "TripFactorySyne",
+    source: "url('/asset/Syne-Medium.ttf') format('truetype')",
+    className: "tf-font-syne-ready",
+  },
+  {
+    family: "TripFactorySignature",
+    source: "url('/asset/Photograph Signature.ttf') format('truetype')",
+    className: "tf-font-signature-ready",
+  },
+];
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
@@ -349,6 +377,7 @@ function InputElement({ id, className, children, style, scaleClassName, inputTyp
         inputMode={inputType === "number" ? "numeric" : undefined}
         pattern={inputType === "number" ? "[0-9]*" : undefined}
         onChange={handleChange}
+        suppressHydrationWarning
         {...inputValueProps}
       />
       {scaledChildren(scaleClassName, children)}
@@ -369,7 +398,7 @@ function TextareaElement({ id, className, children, style, scaleClassName, value
 
   return (
     <div className={`tf-el tf-textarea ${className}`} data-id={id} data-type="textarea" style={style}>
-      <textarea placeholder={content.fields[id]?.placeholder ?? ""} onChange={handleChange} {...textValueProps} />
+      <textarea placeholder={content.fields[id]?.placeholder ?? ""} onChange={handleChange} suppressHydrationWarning {...textValueProps} />
       {scaledChildren(scaleClassName, children)}
     </div>
   );
@@ -401,7 +430,7 @@ function SelectElement({
 
   return (
     <div className={`tf-el tf-select ${className}`} data-id={id} data-type="select" style={style}>
-      <select disabled={disabled} onChange={(event) => onValueChange?.(event.target.value)} {...selectValueProps}>
+      <select disabled={disabled} onChange={(event) => onValueChange?.(event.target.value)} suppressHydrationWarning {...selectValueProps}>
         <option value="" disabled>
           {resolvedPlaceholder}
         </option>
@@ -646,7 +675,6 @@ function DesktopPage({ buttonAction, sliderIndexes, enquiryForm, packageDuration
       </BoxElement>
       <TextElement id={"cta_heading_line1"} className="tf-d-text_mraw949w_5iwgi" />
     </BoxElement>
-    <SiteFooter className="tf-home-site-footer tf-home-site-footer--desktop" mode="desktop" onAction={buttonAction} />
     <ImageElement id={"decorative_image_5"} className="tf-d-image_mrc98pax_8vb1u" />
     <ImageElement id={"marquee_logo_1"} className="tf-d-image_mrc9fn5h_8uhqz" />
     <ImageElement id={"marquee_logo_2"} className="tf-d-image_mrc9fn5g_8uhqz" />
@@ -703,6 +731,7 @@ function DesktopPage({ buttonAction, sliderIndexes, enquiryForm, packageDuration
     <BoxElement id={"container_mrcd83lw"} className="tf-d-container_mrcd83lw_pygfp" type="container">
       <TextElement id={"fleet_bottom_badge_label"} className="tf-d-text_mrcd83lx_66izj" />
     </BoxElement>
+    <SiteFooter className="tf-home-site-footer tf-home-site-footer--desktop" mode="desktop" onAction={buttonAction} />
     </>
   );
 }
@@ -1020,10 +1049,11 @@ function evaluateFrames(frames: AnimationFrameSpec[], t: number): AnimationFrame
   };
 }
 
-function isFullyVisible(node: HTMLElement) {
+function isElementVisible(node: HTMLElement) {
   const rect = node.getBoundingClientRect();
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-  return rect.top >= 0 && rect.bottom <= viewportHeight;
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  return rect.bottom > 0 && rect.right > 0 && rect.top < viewportHeight && rect.left < viewportWidth;
 }
 
 function activeAnimationMode(): Mode {
@@ -1031,6 +1061,9 @@ function activeAnimationMode(): Mode {
 }
 
 function useAdvancedAnimations() {
+  const startedAnimationIdsRef = useRef<Set<string>>(new Set());
+  const completedAnimationIdsRef = useRef<Set<string>>(new Set());
+
   useEffect(() => {
     let cleanupCurrent = () => {};
     let resizeTimer: number | undefined;
@@ -1044,7 +1077,10 @@ function useAdvancedAnimations() {
 
       const cleanups: Array<() => void> = [];
       const runningFrames = new Set<number>();
-      const scrollAnimations = new Map<string, { node: HTMLElement; animation: AdvancedAnimationSpec; t: number; ready: boolean; appeared: boolean; delayStarted: boolean }>();
+      const scrollAnimations = new Map<
+        string,
+        { node: HTMLElement; animation: AdvancedAnimationSpec; t: number; ready: boolean; appeared: boolean; delayStarted: boolean; completed: boolean }
+      >();
       let lastScrollY = window.scrollY;
 
       const cancelFrame = (frameId: number) => {
@@ -1058,11 +1094,21 @@ function useAdvancedAnimations() {
       };
 
       const startLoopOrOnce = (id: string, node: HTMLElement, animation: AdvancedAnimationSpec) => {
+        if (animation.type === "once") {
+          if (completedAnimationIdsRef.current.has(id)) {
+            applyAnimationFrame(node, animation.frames[animation.frames.length - 1]);
+            return;
+          }
+          if (startedAnimationIdsRef.current.has(id)) return;
+          startedAnimationIdsRef.current.add(id);
+        }
+
         let t = 0;
         let direction = 1;
         let lastTimestamp: number | null = null;
         let delayLeft = animation.delay;
         let frameId = 0;
+        let completedOnce = false;
 
         const tick = (timestamp: number) => {
           const delta = lastTimestamp === null ? 0 : Math.min((timestamp - lastTimestamp) / 1000, 0.1);
@@ -1096,17 +1142,21 @@ function useAdvancedAnimations() {
 
           if (animation.type !== "once" || t < 1) {
             frameId = trackFrame(window.requestAnimationFrame(tick));
+          } else {
+            completedOnce = true;
+            completedAnimationIdsRef.current.add(id);
           }
         };
 
         frameId = trackFrame(window.requestAnimationFrame(tick));
         cleanups.push(() => {
           if (frameId) cancelFrame(frameId);
+          if (animation.type === "once" && !completedOnce) startedAnimationIdsRef.current.delete(id);
           void id;
         });
       };
 
-      const startWhenReady = (node: HTMLElement, animation: AdvancedAnimationSpec, start: () => void) => {
+      const startWhenReady = (id: string, node: HTMLElement, animation: AdvancedAnimationSpec, start: () => void) => {
         if (!animation.animateOnAppear) {
           start();
           return;
@@ -1114,6 +1164,11 @@ function useAdvancedAnimations() {
 
         const observer = new IntersectionObserver((entries) => {
           if (entries.some((entry) => entry.isIntersecting)) {
+            if (animation.type === "once" && completedAnimationIdsRef.current.has(id)) {
+              applyAnimationFrame(node, animation.frames[animation.frames.length - 1]);
+              observer.disconnect();
+              return;
+            }
             start();
             observer.disconnect();
           }
@@ -1144,13 +1199,28 @@ function useAdvancedAnimations() {
       };
 
       for (const [id, animation] of Object.entries(ADVANCED_ANIMATIONS[mode])) {
+        if (DISABLED_ADVANCED_ANIMATION_IDS.has(id)) continue;
+
         const node = findAnimatedNode(root, id);
         if (!node) continue;
+
+        if (animation.type === "once" && completedAnimationIdsRef.current.has(id)) {
+          applyAnimationFrame(node, animation.frames[animation.frames.length - 1]);
+          continue;
+        }
 
         applyAnimationFrame(node, animation.frames[0]);
 
         if (animation.type === "scroll") {
-          scrollAnimations.set(id, { node, animation, t: 0, ready: !animation.animateOnAppear && animation.delay <= 0, appeared: !animation.animateOnAppear, delayStarted: false });
+          scrollAnimations.set(id, {
+            node,
+            animation,
+            t: 0,
+            ready: !animation.animateOnAppear && animation.delay <= 0,
+            appeared: !animation.animateOnAppear,
+            delayStarted: false,
+            completed: false,
+          });
           if (!animation.animateOnAppear && animation.delay > 0) {
             const timer = window.setTimeout(() => {
               const state = scrollAnimations.get(id);
@@ -1186,7 +1256,7 @@ function useAdvancedAnimations() {
           continue;
         }
 
-        startWhenReady(node, animation, () => startLoopOrOnce(id, node, animation));
+        startWhenReady(id, node, animation, () => startLoopOrOnce(id, node, animation));
       }
 
       const onScroll = () => {
@@ -1197,7 +1267,7 @@ function useAdvancedAnimations() {
 
         for (const [id, state] of scrollAnimations.entries()) {
           if (state.animation.animateOnAppear) {
-            const visible = isFullyVisible(state.node);
+            const visible = isElementVisible(state.node);
             if (visible && !state.appeared) {
               state.appeared = true;
               if (!state.delayStarted) {
@@ -1213,17 +1283,14 @@ function useAdvancedAnimations() {
                 }
               }
             }
-            if (!visible) {
-              state.appeared = false;
-              state.ready = false;
-              state.delayStarted = false;
-            }
           }
 
-          if (!state.ready) continue;
+          if (!state.ready || state.completed) continue;
           const range = state.animation.scrollRange * state.animation.speed;
-          state.t = clamp(state.t + delta / range, 0, 1);
+          const nextDelta = state.animation.animateOnAppear ? Math.max(delta, 0) : delta;
+          state.t = clamp(state.t + nextDelta / range, 0, 1);
           applyAnimationFrame(state.node, evaluateFrames(state.animation.frames, easeInOut(state.t)));
+          if (state.animation.animateOnAppear && state.t >= 1) state.completed = true;
         }
       };
 
@@ -1255,6 +1322,94 @@ function useAdvancedAnimations() {
   }, []);
 }
 
+function hasCssAppearAnimation(node: HTMLElement) {
+  const animationNames = window.getComputedStyle(node).animationName.split(",").map((name) => name.trim());
+  return animationNames.some((name) => CSS_APPEAR_ANIMATION_NAMES.has(name));
+}
+
+function useCssAppearAnimations() {
+  useLayoutEffect(() => {
+    let cleanupCurrent = () => {};
+    let resizeTimer: number | undefined;
+
+    const setup = () => {
+      cleanupCurrent();
+
+      const mode = activeAnimationMode();
+      const root = document.querySelector<HTMLElement>(mode === "mobile" ? ".tf-mobile-canvas" : ".tf-desktop-canvas");
+      if (!root || !("IntersectionObserver" in window)) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const node = entry.target as HTMLElement;
+            node.classList.remove("tf-css-appear-waiting");
+            node.dataset.tfCssAppearDone = "true";
+            observer.unobserve(node);
+          }
+        },
+        { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+      );
+
+      root.querySelectorAll<HTMLElement>(".tf-el").forEach((node) => {
+        if (node.dataset.tfCssAppearDone === "true" || !hasCssAppearAnimation(node)) return;
+
+        node.classList.add("tf-css-appear-waiting");
+        observer.observe(node);
+      });
+
+      cleanupCurrent = () => observer.disconnect();
+    };
+
+    setup();
+
+    const onResize = () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(setup, 150);
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+      cleanupCurrent();
+    };
+  }, []);
+}
+
+function useSequentialFontLoading() {
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadFonts = async () => {
+      if (!("fonts" in document) || !("FontFace" in window)) {
+        SEQUENTIAL_FONTS.forEach((font) => document.documentElement.classList.add(font.className));
+        return;
+      }
+
+      for (const font of SEQUENTIAL_FONTS) {
+        try {
+          const fontFace = new FontFace(font.family, font.source, { display: "swap" });
+          await fontFace.load();
+          if (cancelled) return;
+          document.fonts.add(fontFace);
+          document.documentElement.classList.add(font.className);
+          await new Promise((resolve) => window.setTimeout(resolve, 120));
+        } catch {
+          if (!cancelled) document.documentElement.classList.add(font.className);
+        }
+      }
+    };
+
+    loadFonts();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+}
+
 function useMobileContentHeight(scale: number) {
   const [height, setHeight] = useState(MOBILE_CANVAS_HEIGHT);
 
@@ -1275,17 +1430,20 @@ function useMobileContentHeight(scale: number) {
       const unscaledExtent = (footerBottom - canvasTop) / scale;
 
       setHeight((current) => {
-        const next = Math.max(MOBILE_CANVAS_HEIGHT, Math.ceil(unscaledExtent) + 32);
+        const next = Math.max(1, Math.ceil(unscaledExtent));
         return next === current ? current : next;
       });
     };
 
     measure();
-    // Re-measure after fonts/images settle, since layout can shift slightly on load.
-    const settleTimer = window.setTimeout(measure, 300);
+    const settleTimers = [300, 900, 1600].map((delay) => window.setTimeout(measure, delay));
+    const resizeObserver = "ResizeObserver" in window ? new ResizeObserver(measure) : null;
+    const footer = document.querySelector<HTMLElement>(".tf-mobile-canvas .tf-home-site-footer--mobile");
+    if (footer) resizeObserver?.observe(footer);
     window.addEventListener("resize", measure);
     return () => {
-      window.clearTimeout(settleTimer);
+      settleTimers.forEach((timer) => window.clearTimeout(timer));
+      resizeObserver?.disconnect();
       window.removeEventListener("resize", measure);
     };
   }, [scale]);
@@ -1294,6 +1452,8 @@ function useMobileContentHeight(scale: number) {
 }
 
 export default function TripFactoryPage() {
+  useSequentialFontLoading();
+  useCssAppearAnimations();
   useAdvancedAnimations();
   const mobileScale = useMobileScale();
   const mobileContentHeight = useMobileContentHeight(mobileScale);
@@ -1407,7 +1567,7 @@ export default function TripFactoryPage() {
         members,
         message,
       });
-      window.location.href = `https://wa.me/919487428892?text=${encodeURIComponent(whatsappMessage)}`;
+      window.location.href = `https://wa.me/918531020303?text=${encodeURIComponent(whatsappMessage)}`;
       return true;
     }
 

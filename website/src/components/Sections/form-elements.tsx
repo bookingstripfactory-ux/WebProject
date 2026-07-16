@@ -62,6 +62,7 @@ export function InputElement({ id, className, children, style, scaleClassName, i
         inputMode={inputType === "number" ? "numeric" : undefined}
         pattern={inputType === "number" ? "[0-9]*" : undefined}
         onChange={handleChange}
+        suppressHydrationWarning
         {...inputValueProps}
       />
       {scaledChildren(scaleClassName, children)}
@@ -82,7 +83,7 @@ export function TextareaElement({ id, className, children, style, scaleClassName
 
   return (
     <div className={`tf-el tf-textarea ${className}`} data-id={id} data-type="textarea" style={style}>
-      <textarea placeholder={content.fields[id]?.placeholder ?? ""} onChange={handleChange} {...textValueProps} />
+      <textarea placeholder={content.fields[id]?.placeholder ?? ""} onChange={handleChange} suppressHydrationWarning {...textValueProps} />
       {scaledChildren(scaleClassName, children)}
     </div>
   );
@@ -114,7 +115,7 @@ export function SelectElement({
 
   return (
     <div className={`tf-el tf-select ${className}`} data-id={id} data-type="select" style={style}>
-      <select disabled={disabled} onChange={(event) => onValueChange?.(event.target.value)} {...selectValueProps}>
+      <select disabled={disabled} onChange={(event) => onValueChange?.(event.target.value)} suppressHydrationWarning {...selectValueProps}>
         <option value="" disabled>
           {resolvedPlaceholder}
         </option>

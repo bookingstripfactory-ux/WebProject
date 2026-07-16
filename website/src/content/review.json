@@ -14,7 +14,7 @@
     },
     {
       "id": "review_dbs_priya",
-      "name": "Priya Dharshini",
+      "name": "Dharshini",
       "subName": "Bank Manager, DBS Bank",
       "review": "Planned a trip for our team and everything was spot on, right from pickup time to drop. The bus was comfortable for the long hours and the coordinators were always ready to help with a smile.",
       "starCount": 5,
@@ -27,7 +27,7 @@
     {
       "id": "review_ppg_karthik",
       "name": "Karthik Raja",
-      "subName": "Cultural Club Coordinator, PPG College of Arts and Science",
+      "subName": "Coordinator,PPG College of Arts and Science",
       "review": "Took our students for an educational trip and honestly it went smoother than expected. Food stops were hygienic, timings were never delayed, and the DJ in the bus kept everyone's energy up throughout the journey.",
       "starCount": 5,
       "logoLocation": "/Logo_Folder/PPG.png",
@@ -66,7 +66,7 @@
       "subName": "Student Welfare Officer, Kovai Kalaimagal College of Arts and Science",
       "review": "Everything from pickup to drop was on time, which parents really appreciated. The bus was clean and comfortable, and the DJ made the students dance the whole way, they still talk about it.",
       "starCount": 5,
-      "logoLocation": "/Logo_Folder/KOVAI_KALAIMAGAL.png",
+      "logoLocation": "/Logo_Folder/KOVAI KALAIMAGAL.PNG",
       "logoSize": {
         "width": 110,
         "height": 66
@@ -110,7 +110,7 @@
     },
     {
       "id": "review_ksb_prasanna",
-      "name": "Prasanna Venkatesan",
+      "name": "Prasanna",
       "subName": "Admin Team, KSB Limited",
       "review": "We had a strict schedule for our company trip and they stuck to it perfectly. Bus was comfortable, food was clean, and the staff were courteous throughout the journey.",
       "starCount": 5,
@@ -138,7 +138,7 @@
       "subName": "Student Coordinator, Vidyaa Vikas College of Engineering and Technology",
       "review": "Our trip had a lot of stops but somehow they managed the timing perfectly every single time. Bus was comfortable for the overnight journey and the DJ kept everyone awake and dancing.",
       "starCount": 4,
-      "logoLocation": "/Logo_Folder/vidyaa_vikas.png",
+      "logoLocation": "/Logo_Folder/SVS.jpeg",
       "logoSize": {
         "width": 110,
         "height": 66
@@ -176,7 +176,7 @@
       "starCount": 4,
       "logoLocation": "/Logo_Folder/dream.jpeg",
       "logoSize": {
-        "width": 110,
+        "width": 100,
         "height": 66
       }
     },
@@ -206,7 +206,7 @@
     },
     {
       "id": "review_americancollege_rajesh",
-      "name": "Rajesh Kanna",
+      "name": "Rajesh",
       "subName": "Alumni Relations Officer, The American College, Madurai",
       "review": "Took a group of alumni and current students together and the whole trip felt well managed. Good hygienic food stops, comfortable bus, and the DJ made the younger crowd really happy.",
       "starCount": 5,
@@ -260,7 +260,7 @@
       "starCount": 5,
       "logoLocation": "/Logo_Folder/kalaikalvi.jpeg",
       "logoSize": {
-        "width": 110,
+        "width": 100,
         "height": 66
       }
     },
@@ -284,8 +284,8 @@
       "starCount": 4,
       "logoLocation": "/Logo_Folder/psg.png",
       "logoSize": {
-        "width": 110,
-        "height": 66
+        "width": 100,
+        "height": 56
       }
     },
     {
