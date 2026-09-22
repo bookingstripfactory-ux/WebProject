@@ -73,18 +73,6 @@
       }
     },
     {
-      "id": "review_ramnagar_bala",
-      "name": "Bala Murugan",
-      "subName": "School Trip In-charge, Ramnagar Suburban M.H.S.S",
-      "review": "We had young students so safety mattered a lot, and the staff kept an eye on everyone at every stop. Food was hygienic, bus was comfortable, and the drivers were extremely friendly with the kids.",
-      "starCount": 5,
-      "logoLocation": "/Logo_Folder/RAMNAGAR SUBURBNAN.jpeg",
-      "logoSize": {
-        "width": 110,
-        "height": 66
-      }
-    },
-    {
       "id": "review_infosys_sathish",
       "name": "Sathish Kumar",
       "subName": "Employee Engagement Team, Infosys",
