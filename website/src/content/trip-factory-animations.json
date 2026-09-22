@@ -1,7 +1,7 @@
 {
   "mobileCanvas": {
     "width": 390,
-    "height": 6308
+    "height": 5686
   },
   "sliders": {
     "slider_mrad23lg": {
@@ -66,10 +66,6 @@
       },
       "footer_enquiry_link": {
         "locationId": "loc_mrcd1in9"
-      },
-      "footer_testimonials_link": {
-        "locationId": "loc_mrcdf778",
-        "target": "main"
       }
     },
     "mobile": {
@@ -110,19 +106,15 @@
       },
       "footer_enquiry_link": {
         "locationId": "loc_mrcd1in9"
-      },
-      "footer_testimonials_link": {
-        "locationId": "loc_mrcdf778",
-        "target": "main"
       }
     }
   },
   "locations": {
     "loc_mr0edof2": 656,
     "loc_mrcd0ve0": 1350,
-    "loc_mrcd1in9": 3539,
+    "loc_mrcd1in9": 2974,
     "loc_mrcd2xkz": 1350,
-    "loc_mrcd39tj": 3539,
+    "loc_mrcd39tj": 2974,
     "loc_mrcddcfx": 663,
     "loc_mrcdf778": 2112
   },
@@ -704,7 +696,7 @@
           }
         ]
       },
-      "Testimonial_Form": {
+      "Enquiry_Form": {
         "type": "once",
         "speed": 0.5,
         "delay": 0,
@@ -1364,66 +1356,6 @@
           }
         ]
       },
-      "testimonials_intro_text": {
-        "type": "once",
-        "speed": 0.5,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 41,
-            "y": 66,
-            "w": 821,
-            "h": 33,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 65,
-            "y": 66,
-            "w": 821,
-            "h": 33,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonials_heading": {
-        "type": "once",
-        "speed": 0.55,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 241,
-            "y": 30,
-            "w": 259,
-            "h": 47,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 241,
-            "y": 6,
-            "w": 259,
-            "h": 47,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
       "container_mra6rgjk": {
         "type": "once",
         "speed": 0.5,
@@ -1448,36 +1380,6 @@
             "y": -27,
             "w": 177,
             "h": 25,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonials_heading_line1": {
-        "type": "once",
-        "speed": 0.55,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 32,
-            "y": 29,
-            "w": 264,
-            "h": 55,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 32,
-            "y": 5,
-            "w": 264,
-            "h": 55,
             "opacity": 1,
             "scale": 1,
             "rotation": 0
@@ -1598,96 +1500,6 @@
             "y": 218,
             "w": 638,
             "h": 36,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonial_1_quote_icon_open": {
-        "type": "once",
-        "speed": 0.5,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 8,
-            "y": 180,
-            "w": 103,
-            "h": 119,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 8,
-            "y": 156,
-            "w": 103,
-            "h": 119,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonial_1_quote_icon_close": {
-        "type": "once",
-        "speed": 0.5,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 272,
-            "y": -37,
-            "w": 103,
-            "h": 119,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 272,
-            "y": -61,
-            "w": 103,
-            "h": 119,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonial_1_quote": {
-        "type": "once",
-        "speed": 0.5,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 22,
-            "y": 78,
-            "w": 296,
-            "h": 43,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 46,
-            "y": 78,
-            "w": 296,
-            "h": 43,
             "opacity": 1,
             "scale": 1,
             "rotation": 0
@@ -2545,7 +2357,7 @@
           }
         ]
       },
-      "Testimonial_Form": {
+      "Enquiry_Form": {
         "type": "once",
         "speed": 0.5,
         "delay": 0,
@@ -3265,66 +3077,6 @@
           }
         ]
       },
-      "testimonials_intro_text": {
-        "type": "once",
-        "speed": 0.5,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 20,
-            "y": 62,
-            "w": 821,
-            "h": 33,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 44,
-            "y": 62,
-            "w": 821,
-            "h": 33,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonials_heading": {
-        "type": "once",
-        "speed": 0.55,
-        "delay": 0,
-        "animateOnAppear": false,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 241,
-            "y": 30,
-            "w": 259,
-            "h": 47,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 241,
-            "y": 6,
-            "w": 259,
-            "h": 47,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
       "container_mra6rgjk": {
         "type": "once",
         "speed": 0.5,
@@ -3349,36 +3101,6 @@
             "y": -27,
             "w": 209,
             "h": 31,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonials_heading_line1": {
-        "type": "once",
-        "speed": 0.55,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 32,
-            "y": 29,
-            "w": 264,
-            "h": 55,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 32,
-            "y": 5,
-            "w": 264,
-            "h": 55,
             "opacity": 1,
             "scale": 1,
             "rotation": 0
@@ -3529,36 +3251,6 @@
             "y": 503,
             "w": 375,
             "h": 36,
-            "opacity": 1,
-            "scale": 1,
-            "rotation": 0
-          }
-        ]
-      },
-      "testimonial_1_quote": {
-        "type": "once",
-        "speed": 1,
-        "delay": 0,
-        "animateOnAppear": true,
-        "smooth": false,
-        "scrollRange": 200,
-        "triggerButtonId": "",
-        "hoverElementId": "",
-        "frames": [
-          {
-            "x": 22,
-            "y": 78,
-            "w": 296,
-            "h": 43,
-            "opacity": 0,
-            "scale": 1,
-            "rotation": 0
-          },
-          {
-            "x": 46,
-            "y": 78,
-            "w": 296,
-            "h": 43,
             "opacity": 1,
             "scale": 1,
             "rotation": 0

@@ -50,7 +50,7 @@ export function ConnectSectionDesktop({ buttonAction, enquiryForm, packageDurati
           <TextElement id={"contact_address"} className="tf-d-text_mraxrtcq_5khzt" />
         </BoxElement>
       </BoxElement>
-      <BoxElement id={"Testimonial_Form"} className="tf-d-Testimonial_Form_tx4ll" type="container">
+      <BoxElement id={"Enquiry_Form"} className="tf-d-Enquiry_Form_tx4ll" type="container">
         <div className="tf-enquiry-row tf-enquiry-row--paired">
           <InputElement id={"enquiry_name_input"} className="tf-d-input_mrb0ygep_kwdlv" value={enquiryForm.name} onValueChange={enquiryForm.onNameChange}>
             <TextElement id={"enquiry_name_label"} className="tf-d-text_mrb0ygew_4y2mt" />
@@ -162,7 +162,7 @@ export function ConnectSectionMobile({ buttonAction, enquiryForm, packageDuratio
           <ImageElement id={"contact_email_icon"} className="tf-m-image_mrb0t6c9_9g9pd" />
         </BoxElement>
       </BoxElement>
-      <BoxElement id={"Testimonial_Form"} className="tf-m-Testimonial_Form_tx4ll" type="container">
+      <BoxElement id={"Enquiry_Form"} className="tf-m-Enquiry_Form_tx4ll" type="container">
         <div className="tf-enquiry-row tf-enquiry-row--paired">
           <InputElement id={"enquiry_name_input"} className="tf-m-input_mrb0ygep_kwdlv" value={enquiryForm.name} onValueChange={enquiryForm.onNameChange}>
             <TextElement id={"enquiry_name_label"} className="tf-m-text_mrb0ygew_4y2mt" />

@@ -17,7 +17,6 @@ import {
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { PackageCard, PACKAGE_CARDS, type PackageDuration, type PackageEnquirySelection } from "@/components/cards/PackageCard";
-import { TestimonialDeck } from "@/components/cards/TestimonialCard";
 import { OfferingCard, PRIMARY_OFFERING_CARDS, SECONDARY_OFFERING_CARDS } from "@/components/cards/OfferingCard";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNavbar } from "@/components/SiteNavbar";
@@ -245,20 +244,7 @@ const ADVANCED_ANIMATIONS = tripFactoryAnimations.advancedAnimations;
 const GOOGLE_MAP_EMBED_URL =
   "https://www.google.com/maps?q=GAME+BOY,+No+966,FF4+laxmanan+Nagar+Dr.Radhakrishnan+Road,+2nd+Cross+Rd,+Extn,+Gandhipuram,+Coimbatore,+Tamil+Nadu+641012&output=embed";
 const CSS_APPEAR_ANIMATION_NAMES = new Set(["tf-fadeIn", "tf-slideUp", "tf-slideIn", "tf-zoomIn"]);
-const DISABLED_ADVANCED_ANIMATION_IDS = new Set([
-  "container_mrarstno",
-  "container_mrav47v5",
-  "container_mrav47vd",
-  "testimonial_1_quote",
-  "testimonial_2_quote",
-  "testimonial_3_quote",
-  "testimonial_1_quote_icon_open",
-  "testimonial_1_quote_icon_close",
-  "testimonial_2_quote_icon_open",
-  "testimonial_2_quote_icon_close",
-  "testimonial_3_quote_icon_open",
-  "testimonial_3_quote_icon_close",
-]);
+const DISABLED_ADVANCED_ANIMATION_IDS = new Set<string>();
 const SEQUENTIAL_FONTS = [
   {
     family: "TripFactorySyne",
@@ -568,15 +554,7 @@ function DesktopPage({ buttonAction, sliderIndexes, enquiryForm, packageDuration
       <TextElement id={"fleet_description_2"} className="tf-d-text_mrad23le_58bwt" />
     </BoxElement>
     <ImageElement id={"decorative_image_3"} className="tf-d-image_mrc4gq2l_8x80t" />
-    <BoxElement id={"Testimonial_Section"} className="tf-d-Testimonial_Section_djwgz" type="group">
-      <TestimonialDeck mode="desktop" />
-      <TextElement id={"testimonials_intro_text"} className="tf-d-text_mra6rgji_4k7b6" />
-      <TextElement id={"testimonials_heading"} className="tf-d-text_mra6rgjj_4k7b6" />
-      <BoxElement id={"container_mra6rgjk"} className="tf-d-container_mra6rgjk_oc4rd" type="container">
-        <TextElement id={"testimonials_badge_label"} className="tf-d-text_mra6rgjl_4k7b6" />
-      </BoxElement>
-      <TextElement id={"testimonials_heading_line1"} className="tf-d-text_mra6rgjm_4k7b6" />
-    </BoxElement>
+    <div className="tf-home-downstream tf-home-downstream--desktop">
     <ImageElement id={"decorative_image_4"} className="tf-d-image_mrc841er_8vyp0" />
     <BoxElement id={"Let's_connect_Section"} className="tf-d-Let_s_connect_Section_xqyc9" type="group">
       <BoxElement id={"container_mrax5i7o"} className="tf-d-container_mrax5i7o_pbc8l" type="container">
@@ -596,7 +574,7 @@ function DesktopPage({ buttonAction, sliderIndexes, enquiryForm, packageDuration
           <TextElement id={"contact_address"} className="tf-d-text_mraxrtcq_5khzt" />
         </BoxElement>
       </BoxElement>
-      <BoxElement id={"Testimonial_Form"} className="tf-d-Testimonial_Form_tx4ll" type="container">
+      <BoxElement id={"Enquiry_Form"} className="tf-d-Enquiry_Form_tx4ll" type="container">
         <div className="tf-enquiry-row tf-enquiry-row--paired">
           <InputElement id={"enquiry_name_input"} className="tf-d-input_mrb0ygep_kwdlv" value={enquiryForm.name} onValueChange={enquiryForm.onNameChange}>
             <TextElement id={"enquiry_name_label"} className="tf-d-text_mrb0ygew_4y2mt" />
@@ -732,6 +710,7 @@ function DesktopPage({ buttonAction, sliderIndexes, enquiryForm, packageDuration
       <TextElement id={"fleet_bottom_badge_label"} className="tf-d-text_mrcd83lx_66izj" />
     </BoxElement>
     <SiteFooter className="tf-home-site-footer tf-home-site-footer--desktop" mode="desktop" onAction={buttonAction} />
+    </div>
     </>
   );
 }
@@ -847,15 +826,7 @@ function MobilePage({ buttonAction, sliderIndexes, enquiryForm, packageDurationT
       <TextElement id={"fleet_description_2"} className="tf-m-text_mrad23le_58bwt" />
     </BoxElement>
     <ImageElement id={"decorative_image_3"} className="tf-m-image_mrc4gq2l_8x80t" />
-    <BoxElement id={"Testimonial_Section"} className="tf-m-Testimonial_Section_djwgz" type="group" scaleClassName="tf-scale-m-Testimonial_Section_djwgz">
-      <TestimonialDeck mode="mobile" />
-      <TextElement id={"testimonials_intro_text"} className="tf-m-text_mra6rgji_4k7b6" />
-      <TextElement id={"testimonials_heading"} className="tf-m-text_mra6rgjj_4k7b6" />
-      <BoxElement id={"container_mra6rgjk"} className="tf-m-container_mra6rgjk_oc4rd" type="container">
-        <TextElement id={"testimonials_badge_label"} className="tf-m-text_mra6rgjl_4k7b6" />
-      </BoxElement>
-      <TextElement id={"testimonials_heading_line1"} className="tf-m-text_mra6rgjm_4k7b6" />
-    </BoxElement>
+    <div className="tf-home-downstream tf-home-downstream--mobile">
     <ImageElement id={"decorative_image_4"} className="tf-m-image_mrc841er_8vyp0" />
     <BoxElement id={"Let's_connect_Section"} className="tf-m-Let_s_connect_Section_xqyc9" type="group">
       <BoxElement id={"container_mrax5i7o"} className="tf-m-container_mrax5i7o_pbc8l" type="container" scaleClassName="tf-scale-m-container_mrax5i7o_pbc8l">
@@ -883,7 +854,7 @@ function MobilePage({ buttonAction, sliderIndexes, enquiryForm, packageDurationT
           <ImageElement id={"contact_email_icon"} className="tf-m-image_mrb0t6c9_9g9pd" />
         </BoxElement>
       </BoxElement>
-      <BoxElement id={"Testimonial_Form"} className="tf-m-Testimonial_Form_tx4ll" type="container">
+      <BoxElement id={"Enquiry_Form"} className="tf-m-Enquiry_Form_tx4ll" type="container">
         <div className="tf-enquiry-row tf-enquiry-row--paired">
           <InputElement id={"enquiry_name_input"} className="tf-m-input_mrb0ygep_kwdlv" value={enquiryForm.name} onValueChange={enquiryForm.onNameChange}>
             <TextElement id={"enquiry_name_label"} className="tf-m-text_mrb0ygew_4y2mt" />
@@ -995,6 +966,7 @@ function MobilePage({ buttonAction, sliderIndexes, enquiryForm, packageDurationT
     </BoxElement>
     <ImageElement id={"decorative_image_6"} className="tf-m-image_mrboyqls_8hi91" />
     <TextElement id={"mobile_contact_us_heading"} className="tf-m-text_mrdfrhpx_6pqbq" />
+    </div>
     </>
   );
 }

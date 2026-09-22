@@ -45,22 +45,6 @@
     "fleet_description": "From spacious sleeper coaches to nimble mini-buses, our well-maintained fleet is built for group journeys of every size. Each vehicle is regularly serviced and driven by verified, experienced drivers who know the routes as well as they know safety.",
     "fleet_description_2": "Whether it's a 40-student college trip or a 200-strong corporate off-site, we match you with the right vehicle — comfortable seating, ample luggage space, and a smooth ride from start to finish.",
     "fleet_bottom_badge_label": "Our Fleet",
-    "testimonials_badge_label": "Testimonials",
-    "testimonials_heading_line1": "What Our",
-    "testimonials_heading": "Clients Say!",
-    "testimonials_intro_text": "Trusted by Schools, Colleges & Corporates",
-    "testimonial_1_initial": "K",
-    "testimonial_1_name": "Mukund M",
-    "testimonial_1_role": "VTV Institution,Trichy",
-    "testimonial_1_quote": "\"Liked the Trip very much that, we planned to visit the same place next year also\"",
-    "testimonial_2_initial": "K",
-    "testimonial_2_name": "Keerthi M",
-    "testimonial_2_role": "VTV Institution,Trichy",
-    "testimonial_2_quote": "\"Liked the Trip very much that, we planned to visit the same place next year also\"",
-    "testimonial_3_initial": "K",
-    "testimonial_3_name": "Keerthi M",
-    "testimonial_3_role": "VTV Institution,Trichy",
-    "testimonial_3_quote": "\"Liked the Trip very much that, we planned to visit the same place next year also\"",
     "gallery_tagline": "This is what 'unforgettable' looks like.",
     "offerings_badge_label": "Our Offerings",
     "offerings_heading_line1": "Your Complete",
@@ -106,7 +90,6 @@
     "footer_packages_link": "Packages",
     "footer_about_us_link": "About Us",
     "footer_enquiry_link": "Enquiry",
-    "footer_testimonials_link": "Bus",
     "footer_legal_heading": "Legal",
     "footer_terms_link": "Terms and Conditions",
     "footer_privacy_link": "Privacy Policy",
@@ -250,30 +233,6 @@
     },
     "decorative_image_3": {
       "src": "/asset/bg6.png",
-      "alt": ""
-    },
-    "testimonial_1_quote_icon_open": {
-      "src": "/asset/quto1.png",
-      "alt": ""
-    },
-    "testimonial_1_quote_icon_close": {
-      "src": "/asset/quto2.png",
-      "alt": ""
-    },
-    "testimonial_2_quote_icon_open": {
-      "src": "/asset/quto1.png",
-      "alt": ""
-    },
-    "testimonial_2_quote_icon_close": {
-      "src": "/asset/quto2.png",
-      "alt": ""
-    },
-    "testimonial_3_quote_icon_open": {
-      "src": "/asset/quto1.png",
-      "alt": ""
-    },
-    "testimonial_3_quote_icon_close": {
-      "src": "/asset/quto2.png",
       "alt": ""
     },
     "decorative_image_4": {
