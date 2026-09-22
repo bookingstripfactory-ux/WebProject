@@ -6,7 +6,7 @@ import { TestimonialCard, TESTIMONIAL_CARDS } from "@/components/cards/Testimoni
 export function TestimonialSectionDesktop() {
   return (
     <>
-    <BoxElement id={"Testimonial_Section"} className="tf-d-Testimonial_Section_djwgz" type="group">
+    {/* <BoxElement id={"Testimonial_Section"} className="tf-d-Testimonial_Section_djwgz" type="group">
       {TESTIMONIAL_CARDS.map((card) => (
         <TestimonialCard key={card.root.id} mode="desktop" card={card} />
       ))}
@@ -17,7 +17,7 @@ export function TestimonialSectionDesktop() {
       </BoxElement>
       <TextElement id={"testimonials_heading_line1"} className="tf-d-text_mra6rgjm_4k7b6" />
     </BoxElement>
-    <ImageElement id={"decorative_image_4"} className="tf-d-image_mrc841er_8vyp0" />
+    <ImageElement id={"decorative_image_4"} className="tf-d-image_mrc841er_8vyp0" /> */}
     </>
   );
 }
